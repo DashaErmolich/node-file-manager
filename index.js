@@ -6,9 +6,9 @@ import { messenger } from './Messenger.js';
 
 async function start() {
   const rl = readline.createInterface({ input, output });
-  const username = parser.getUsername();
+  const providedUsername = parser.getUsername() || 'anonymous';
 
-  messenger.invite(username);
+  messenger.invite(providedUsername);
   messenger.printCurrentDir()
 
   rl.on('line', (input) => {
@@ -20,7 +20,7 @@ async function start() {
   });
 
   rl.on('close', () => {
-    messenger.sayGoodBy(username);
+    messenger.sayGoodBy(providedUsername);
   })
 
 
