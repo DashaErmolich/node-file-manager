@@ -9,8 +9,10 @@ async function start() {
   const username = parser.getUsername();
 
   messenger.invite(username);
+  messenger.printCurrentDir()
 
   rl.on('line', (input) => {
+    messenger.printCurrentDir();
     parser.parseInput(input);
     if (input === '.exit') {
       rl.close();

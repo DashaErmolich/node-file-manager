@@ -1,4 +1,4 @@
-import { capitalize } from './utils.js';
+import { capitalize, __dirname } from './utils.js';
 
 class Messenger {
   constructor() {}
@@ -9,6 +9,10 @@ class Messenger {
 
   sayGoodBy(username) {
     console.log(`Thank you for using File Manager, ${capitalize(username)}, goodbye!`);
+  }
+
+  printCurrentDir() {
+    console.log(`You are currently in ${__dirname}`);
   }
 }
 
