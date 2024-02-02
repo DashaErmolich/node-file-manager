@@ -5,9 +5,9 @@ class Parser {
 
   getUsername() {
     return process.argv
-    .slice(2)
-    .find((item) => item.startsWith('--username'))
-    ?.split('=')[1];
+      .slice(2)
+      .find((item) => item.startsWith('--username'))
+      ?.split('=')[1];
   }
 
   parseInput(input) {

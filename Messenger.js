@@ -1,4 +1,4 @@
-import { capitalize, __dirname } from './utils.js';
+import { capitalize } from './utils.js';
 
 class Messenger {
   constructor() {}
@@ -12,7 +12,11 @@ class Messenger {
   }
 
   printCurrentDir() {
-    console.log(`You are currently in ${__dirname}`);
+    console.log(`You are currently in ${process.cwd()}`);
+  }
+
+  print(output) {
+    console.log(output);
   }
 }
 
