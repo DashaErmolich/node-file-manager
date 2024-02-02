@@ -11,7 +11,11 @@ class Parser {
   }
 
   parseInput(input) {
-    console.log(1111, input.split(''));
+    //console.log(1111, input.split(''));
+  }
+
+  extractUserInput(input, command) {
+    return input.slice(command.length + 1)
   }
 }
 

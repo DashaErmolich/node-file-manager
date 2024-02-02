@@ -21,6 +21,10 @@ async function start() {
       await dirController.goUpper();
     }
 
+    if (input.startsWith(Commands.Dir.GoTo)) {
+      await dirController.goTo(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }
