@@ -40,6 +40,10 @@ async function start() {
       await fileController.createEmpty(input);
     }
 
+    if (input.startsWith(Commands.File.Rename)) {
+      await fileController.rename(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }

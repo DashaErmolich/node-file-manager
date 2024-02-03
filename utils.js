@@ -16,3 +16,7 @@ export function sortDirItems(a, b) {
   }
   return a.Type === FileType.Directory ? -1 : 1;
 }
+
+export function splitWords(str) {
+  return str.split(' ');
+}
