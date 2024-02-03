@@ -52,6 +52,10 @@ async function start() {
       await fileController.move(input);
     }
 
+    if (input.startsWith(Commands.File.Delete)) {
+      await fileController.delete(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }

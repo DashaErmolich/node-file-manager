@@ -67,5 +67,14 @@ class FileController {
       console.log(error.message);
     }
   }
+
+  async delete(input) {
+    try {
+      const filePath = path.resolve(parser.extractUserInput(input, Commands.File.Delete));
+      await fsp.rm(filePath);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const fileController = new FileController();
