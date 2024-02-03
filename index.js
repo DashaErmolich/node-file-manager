@@ -36,6 +36,10 @@ async function start() {
       await fileController.printContent(input);
     }
 
+    if (input.startsWith(Commands.File.CreateEmpty)) {
+      await fileController.createEmpty(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }
