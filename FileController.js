@@ -39,5 +39,19 @@ class FileController {
       console.log(error.message);
     }
   }
+
+  async copy(input) {
+    try {
+      const data = splitWords(parser.extractUserInput(input, Commands.File.Copy));
+      let [ oldPath, newPath ] = data;
+      oldPath = path.resolve(oldPath);
+      newPath = path.resolve(newPath);
+      const readStream = fs.createReadStream(oldPath, 'utf-8');
+      const writeStream = fs.createWriteStream(newPath, 'utf-8');
+      readStream.pipe(writeStream)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const fileController = new FileController();

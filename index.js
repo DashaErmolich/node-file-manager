@@ -44,6 +44,10 @@ async function start() {
       await fileController.rename(input);
     }
 
+    if (input.startsWith(Commands.File.Copy)) {
+      await fileController.copy(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }
