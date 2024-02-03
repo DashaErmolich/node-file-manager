@@ -45,10 +45,24 @@ class FileController {
       const data = splitWords(parser.extractUserInput(input, Commands.File.Copy));
       let [ oldPath, newPath ] = data;
       oldPath = path.resolve(oldPath);
-      newPath = path.resolve(newPath);
+      const fileName = path.basename(oldPath);
+      newPath = path.resolve(newPath, fileName);
       const readStream = fs.createReadStream(oldPath, 'utf-8');
       const writeStream = fs.createWriteStream(newPath, 'utf-8');
       readStream.pipe(writeStream)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async move(input) {
+    try {
+      this.copy(input);
+
+      const data = splitWords(parser.extractUserInput(input, Commands.File.Copy));
+      let [ oldPath ] = data;
+      oldPath = path.resolve(oldPath);
+      await fsp.rm(oldPath);
     } catch (error) {
       console.log(error.message);
     }

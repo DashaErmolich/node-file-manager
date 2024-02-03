@@ -48,6 +48,10 @@ async function start() {
       await fileController.copy(input);
     }
 
+    if (input.startsWith(Commands.File.Move)) {
+      await fileController.move(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }
