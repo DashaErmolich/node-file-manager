@@ -25,3 +25,8 @@ export const Commands = {
     Decompress: 'decompress',
   },
 };
+
+export const FileType = {
+  File: 'file',
+  Directory: 'directory',
+}

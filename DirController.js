@@ -1,7 +1,9 @@
 import path from 'path';
 import os from 'os';
-import { Commands } from './constants.js';
+import fs from 'fs/promises';
+import { Commands, FileType } from './constants.js';
 import { parser } from './Parser.js';
+import { sortDirItems } from './utils.js';
 
 class DirController {
   limitPath = os.homedir();
@@ -26,6 +28,23 @@ class DirController {
       const targetPath = path.resolve(parser.extractUserInput(input, Commands.Dir.GoTo));
 
       process.chdir(targetPath);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async printItems() {
+    try {
+      const dirItems = (await fs.readdir(process.cwd(), { withFileTypes: true }))
+        .map((data) => {
+          const item = { Name: data.name };
+          item.Type = data.isFile() ? FileType.File : FileType.Directory;
+          return item;
+        })
+        .sort(sortDirItems);
+
+      console.table(dirItems);
+
     } catch (error) {
       console.log(error.message);
     }

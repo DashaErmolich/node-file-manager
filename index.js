@@ -25,6 +25,10 @@ async function start() {
       await dirController.goTo(input);
     }
 
+    if (input === Commands.Dir.PrintItems) {
+      await dirController.printItems();
+    }
+
     if (input === '.exit') {
       rl.close();
     }
