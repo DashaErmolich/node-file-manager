@@ -61,6 +61,10 @@ async function start() {
       await osController.getEOL();
     }
 
+    if (input === Commands.Os.GetCpus) {
+      await osController.getCpus();
+    }
+
     if (input === '.exit') {
       rl.close();
     }

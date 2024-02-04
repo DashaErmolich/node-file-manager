@@ -7,9 +7,25 @@ import { splitWords } from './utils.js';
 import os from 'os';
 
 class OsController {
-  async getEOL() {
+  getEOL() {
     try {
       console.log(JSON.stringify(os.EOL));
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async getCpus() {
+    try {
+      const cpus = os.cpus();
+
+      const info = cpus.map((item) => ({
+        'Model': item.model,
+        'Clock Rate, GHz': item.speed / 1000, // MHz -> GHz
+      }));
+
+      console.log(`Overall amount: ${os.availableParallelism()}`);
+      console.table(info);
     } catch (error) {
       console.log(error.message);
     }
