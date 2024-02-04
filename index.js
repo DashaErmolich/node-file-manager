@@ -65,6 +65,10 @@ async function start() {
       await osController.getCpus();
     }
 
+    if (input === Commands.Os.GetHomeDir) {
+      osController.printHomeDir();
+    }
+
     if (input === '.exit') {
       rl.close();
     }

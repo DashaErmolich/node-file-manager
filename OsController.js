@@ -30,5 +30,13 @@ class OsController {
       console.log(error.message);
     }
   }
+
+  printHomeDir() {
+    try {
+      console.log(os.homedir());
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const osController = new OsController();
