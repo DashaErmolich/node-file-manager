@@ -8,6 +8,7 @@ import { messenger } from './Messenger.js';
 import { dirController } from './DirController.js';
 import { Commands } from './constants.js';
 import { fileController } from './FileController.js';
+import { osController } from './OsController.js';
 
 async function start() {
   const rl = readline.createInterface({ input, output });
@@ -54,6 +55,10 @@ async function start() {
 
     if (input.startsWith(Commands.File.Delete)) {
       await fileController.delete(input);
+    }
+
+    if (input === Commands.Os.GetEOL) {
+      await osController.getEOL();
     }
 
     if (input === '.exit') {
