@@ -25,5 +25,30 @@ class ZlibController {
       console.log(error.message);
     }
   }
+
+  async brotliDecompressFile(input) {
+    try {
+      let [sourcePath, destinationPath] = splitWords(
+        parser.extractUserInput(input, Commands.Zlib.Decompress)
+      );
+      sourcePath = path.resolve(sourcePath);
+      const filename = path.basename(sourcePath).split('.');
+      filename.pop();
+      const newFilename = filename.join('.');
+      destinationPath = path.resolve(
+        destinationPath,
+        newFilename,
+      );
+
+      const readStream = fs.createReadStream(sourcePath);
+      const writeStream = fs.createWriteStream(destinationPath);
+
+      const brotliDecompress = zlib.createBrotliDecompress();
+
+      readStream.pipe(brotliDecompress).pipe(writeStream);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const zlibController = new ZlibController();

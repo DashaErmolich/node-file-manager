@@ -87,6 +87,10 @@ async function start() {
       await zlibController.brotliCompressFile(input);
     }
 
+    if (input.startsWith(Commands.Zlib.Decompress)) {
+      await zlibController.brotliDecompressFile(input);
+    }
+
     if (input === '.exit') {
       rl.close();
     }
