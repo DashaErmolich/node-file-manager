@@ -21,6 +21,8 @@ export const Commands = {
   },
   Hash: {
     CalcAndPrint: 'hash',
+  },
+  Zlib: {
     Compress: 'compress',
     Decompress: 'decompress',
   },
@@ -29,4 +31,4 @@ export const Commands = {
 export const FileType = {
   File: 'file',
   Directory: 'directory',
-}
+};

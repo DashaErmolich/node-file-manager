@@ -10,6 +10,7 @@ import { Commands } from './constants.js';
 import { fileController } from './FileController.js';
 import { osController } from './OsController.js';
 import { hashController } from './HashController.js';
+import { zlibController } from './ZipController.js';
 
 async function start() {
   const rl = readline.createInterface({ input, output });
@@ -80,6 +81,10 @@ async function start() {
 
     if (input.startsWith(Commands.Hash.CalcAndPrint)) {
       await hashController.printFileHash(input);
+    }
+
+    if (input.startsWith(Commands.Zlib.Compress)) {
+      await zlibController.brotliCompressFile(input);
     }
 
     if (input === '.exit') {
