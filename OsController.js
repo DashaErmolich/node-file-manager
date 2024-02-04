@@ -46,5 +46,13 @@ class OsController {
       console.log(error.message);
     }
   }
+
+  printArch() {
+    try {
+      console.log(os.arch());
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const osController = new OsController();

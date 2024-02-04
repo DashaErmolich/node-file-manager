@@ -73,6 +73,10 @@ async function start() {
       osController.printSystemUsername();
     }
 
+    if (input === Commands.Os.GetArchitecture) {
+      osController.printArch();
+    }
+
     if (input === '.exit') {
       rl.close();
     }
