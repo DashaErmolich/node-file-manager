@@ -38,5 +38,13 @@ class OsController {
       console.log(error.message);
     }
   }
+
+  printSystemUsername() {
+    try {
+      console.log(os.userInfo().username);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 }
 export const osController = new OsController();

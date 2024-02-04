@@ -69,6 +69,10 @@ async function start() {
       osController.printHomeDir();
     }
 
+    if (input === Commands.Os.GetUsername) {
+      osController.printSystemUsername();
+    }
+
     if (input === '.exit') {
       rl.close();
     }
