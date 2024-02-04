@@ -10,7 +10,7 @@ import { Commands } from './constants.js';
 import { fileController } from './FileController.js';
 import { osController } from './OsController.js';
 import { hashController } from './HashController.js';
-import { zlibController } from './ZipController.js';
+import { zlibController } from './ZlibController.js';
 
 async function start() {
   const rl = readline.createInterface({ input, output });
