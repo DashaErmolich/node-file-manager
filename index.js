@@ -9,6 +9,7 @@ import { dirController } from './DirController.js';
 import { Commands } from './constants.js';
 import { fileController } from './FileController.js';
 import { osController } from './OsController.js';
+import { hashController } from './HashController.js';
 
 async function start() {
   const rl = readline.createInterface({ input, output });
@@ -75,6 +76,10 @@ async function start() {
 
     if (input === Commands.Os.GetArchitecture) {
       osController.printArch();
+    }
+
+    if (input.startsWith(Commands.Hash.CalcAndPrint)) {
+      await hashController.printFileHash(input);
     }
 
     if (input === '.exit') {
