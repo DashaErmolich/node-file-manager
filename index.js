@@ -2,7 +2,7 @@ import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import { parser } from './Utils/Parser.js';
 import { messenger } from './Utils/Messenger.js';
-import { commandController } from './CommandController.js';
+import { commandController } from './Controllers/CommandController.js';
 import os from 'os';
 import { ValidationError } from './Errors/ValidationError.js';
 
@@ -12,7 +12,7 @@ async function start() {
   const providedUsername = parser.getUsername() || 'anonymous';
 
   messenger.invite(providedUsername);
-  // process.chdir(os.homedir());
+  process.chdir(os.homedir());
   messenger.printCurrentDir();
 
   rl.on('line', async (input) => {

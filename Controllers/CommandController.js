@@ -4,7 +4,7 @@ import { hashController } from './HashController.js';
 import { osController } from './OsController.js';
 import { ValidationError } from '../Errors/ValidationError.js';
 import { zlibController } from './ZlibController.js';
-import { Commands } from '../constants.js';
+import { Commands } from '../Constants/constants.js';
 import { rl as rlInterface } from '../index.js';
 
 class CommandController {

@@ -2,6 +2,7 @@ import { Params } from '../Constants/constants.js';
 import os from 'os';
 import { BaseController } from './BaseController.js';
 import { messenger } from '../Utils/Messenger.js';
+import { ValidationError } from '../Errors/ValidationError.js';
 
 class OsController extends BaseController {
   paramsManager = {
@@ -14,8 +15,10 @@ class OsController extends BaseController {
 
   async printInfo(params) {
     this._checkParamsQty(params, 1);
-
-    await this.paramsManager[params]();
+      if (!(params in this.paramsManager)) {
+        throw new ValidationError(`unknown params ${params}`);
+      }
+      await this.paramsManager[params]();
   }
 
   async printEOL() {
