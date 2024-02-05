@@ -1,10 +1,10 @@
 import path from 'path';
 import os from 'os';
 import fsp from 'fs/promises';
-import { FileType } from './constants.js';
-import { sortDirItems } from './utils.js';
+import { FileType } from '../Constants/constants.js';
+import { sortDirItems } from '../Utils/utils.js';
 import { BaseController } from './BaseController.js';
-import { messenger } from './Messenger.js';
+import { messenger } from '../Utils/Messenger.js';
 
 class DirController extends BaseController {
   limitPath = os.homedir();
@@ -45,8 +45,12 @@ class DirController extends BaseController {
       .sort(sortDirItems);
 
     messenger.printSuccess('List of all files and folders in current directory: ');
-    messenger.printSuccess('- list contains files and folder names (for files - with extension) (Name column)');
-    messenger.printSuccess('- folders and files are sorted in alphabetical order ascending, but list of folders goes first');
+    messenger.printSuccess(
+      '- list contains files and folder names (for files - with extension) (Name column)'
+    );
+    messenger.printSuccess(
+      '- folders and files are sorted in alphabetical order ascending, but list of folders goes first'
+    );
     messenger.printSuccess('- Type of directory content should be marked explicitly (Type column)');
 
     console.table(dirItems);

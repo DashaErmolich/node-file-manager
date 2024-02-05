@@ -1,12 +1,12 @@
 import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
-import { parser } from './Parser.js';
-import { messenger } from './Messenger.js';
+import { parser } from './Utils/Parser.js';
+import { messenger } from './Utils/Messenger.js';
 import { commandController } from './CommandController.js';
 import os from 'os';
-import { ValidationError } from './ValidationError.js';
+import { ValidationError } from './Errors/ValidationError.js';
 
-export const rl = readline.createInterface({ input, output});
+export const rl = readline.createInterface({ input, output });
 
 async function start() {
   const providedUsername = parser.getUsername() || 'anonymous';
@@ -28,7 +28,7 @@ async function start() {
       if (error instanceof ValidationError) {
         messenger.printError(error.message);
       } else {
-        messenger.printError(`Operation failed: ${os.EOL}` + error.message)
+        messenger.printError(`Operation failed: ${os.EOL}` + error.message);
       }
     }
 

@@ -2,7 +2,7 @@ import path from 'path';
 import fsp from 'fs/promises';
 import crypto from 'crypto';
 import { BaseController } from './BaseController.js';
-import { messenger } from './Messenger.js';
+import { messenger } from '../Utils/Messenger.js';
 
 class HashController extends BaseController {
   async printFileHash(params) {

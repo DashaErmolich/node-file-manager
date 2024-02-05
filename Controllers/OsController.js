@@ -1,7 +1,7 @@
-import { Params } from './constants.js';
+import { Params } from '../Constants/constants.js';
 import os from 'os';
 import { BaseController } from './BaseController.js';
-import { messenger } from './Messenger.js';
+import { messenger } from '../Utils/Messenger.js';
 
 class OsController extends BaseController {
   paramsManager = {

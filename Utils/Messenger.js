@@ -1,15 +1,21 @@
-import { ConsoleColors } from './constants.js';
+import { ConsoleColors } from '../Constants/constants.js';
 import { capitalize } from './utils.js';
 
 class Messenger {
   constructor() {}
 
   invite(username) {
-    console.log(ConsoleColors.Yellow, '✨' +` Welcome to the File Manager, ${capitalize(username)}!`);
+    console.log(
+      ConsoleColors.Yellow,
+      '✨' + ` Welcome to the File Manager, ${capitalize(username)}!`
+    );
   }
 
   sayGoodBy(username) {
-    console.log(ConsoleColors.Yellow, '✨' + ` Thank you for using File Manager, ${capitalize(username)}, goodbye!`);
+    console.log(
+      ConsoleColors.Yellow,
+      '✨' + ` Thank you for using File Manager, ${capitalize(username)}, goodbye!`
+    );
   }
 
   printCurrentDir() {
@@ -21,7 +27,6 @@ class Messenger {
   }
 
   printError(output) {
-    // console.log('🙁 Operation failed');
     console.log('🔴', output);
     console.log('🔄', 'Retry, please');
   }

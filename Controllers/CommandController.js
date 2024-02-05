@@ -2,10 +2,10 @@ import { dirController } from './DirController.js';
 import { fileController } from './FileController.js';
 import { hashController } from './HashController.js';
 import { osController } from './OsController.js';
-import { ValidationError } from './ValidationError.js';
+import { ValidationError } from '../Errors/ValidationError.js';
 import { zlibController } from './ZlibController.js';
-import { Commands } from './constants.js';
-import { rl as rlInterface } from './index.js';
+import { Commands } from '../constants.js';
+import { rl as rlInterface } from '../index.js';
 
 class CommandController {
   #command;

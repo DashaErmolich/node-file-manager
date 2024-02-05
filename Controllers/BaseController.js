@@ -1,6 +1,6 @@
 import fsp from 'fs/promises';
 import path from 'path';
-import { ValidationError } from './ValidationError.js';
+import { ValidationError } from '../Errors/ValidationError.js';
 
 export class BaseController {
   _checkParamsQty(params, qty) {

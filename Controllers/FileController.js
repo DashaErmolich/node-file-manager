@@ -3,8 +3,8 @@ import fs from 'fs';
 import fsp from 'fs/promises';
 import os from 'os';
 import { BaseController } from './BaseController.js';
-import { messenger } from './Messenger.js';
-import { ConsoleColors } from './constants.js';
+import { messenger } from '../Utils/Messenger.js';
+import { ConsoleColors } from '../Constants/constants.js';
 
 class FileController extends BaseController {
   async printContent(params) {
@@ -20,13 +20,12 @@ class FileController extends BaseController {
     readStream.on('data', (chunk) => {
       messenger.printContent(`${os.EOL}======= FILE START =======${os.EOL}`, ConsoleColors.Cyan);
       messenger.printContent(chunk);
-    })
+    });
 
     readStream.on('end', () => {
       messenger.printContent(`${os.EOL}======= FILE END =======${os.EOL}`, ConsoleColors.Cyan);
       messenger.printCurrentDir();
-    })
-  
+    });
   }
 
   async createEmpty(params) {

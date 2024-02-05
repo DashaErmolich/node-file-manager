@@ -1,7 +1,7 @@
 import fs from 'fs';
 import zlib from 'zlib';
 import { BaseController } from './BaseController.js';
-import { messenger } from './Messenger.js';
+import { messenger } from '../Utils/Messenger.js';
 
 class ZlibController extends BaseController {
   BROTLI_EXT = '.br';
@@ -16,7 +16,6 @@ class ZlibController extends BaseController {
 
     readStream.pipe(brotliCompress).pipe(writeStream);
     messenger.printSuccess(`File was successfully compressed using Brotli algorithm`);
-    messenger.printSuccess(`File path: ${targetFilePath}`);
   }
 
   async brotliDecompressFile(params) {
@@ -29,7 +28,6 @@ class ZlibController extends BaseController {
 
     readStream.pipe(brotliDecompress).pipe(writeStream);
     messenger.printSuccess(`File was successfully decompressed using Brotli algorithm`);
-    messenger.printSuccess(`File path: ${targetFilePath}`);
   }
 }
 export const zlibController = new ZlibController();
