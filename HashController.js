@@ -1,23 +1,22 @@
 import path from 'path';
-import fs from 'fs';
 import fsp from 'fs/promises';
-import { Commands } from './constants.js';
-import { parser } from './Parser.js';
-import { splitWords } from './utils.js';
 import crypto from 'crypto';
+import { BaseController } from './BaseController.js';
+import { messenger } from './Messenger.js';
 
-class HashController {
-  async printFileHash(input) {
-    try {
-      const filePath = path.resolve(parser.extractUserInput(input, Commands.Hash.CalcAndPrint));
-      const fileBuffer = await fsp.readFile(filePath);
-      const hashSum = crypto.createHash('sha256');
-      hashSum.update(fileBuffer);
-      console.log(hashSum.digest('hex'));
+class HashController extends BaseController {
+  async printFileHash(params) {
+    this._checkParamsQty(params, 1);
 
-    } catch (error) {
-      console.log(error.message);
-    }
+    const [filePath] = params;
+    const targetPath = path.resolve(filePath);
+
+    await this._isFile(targetPath);
+
+    const fileBuffer = await fsp.readFile(targetPath);
+    const hashSum = crypto.createHash('sha256');
+    hashSum.update(fileBuffer);
+    messenger.printSuccess(`File hash: ${hashSum.digest('hex')}`);
   }
 }
 export const hashController = new HashController();

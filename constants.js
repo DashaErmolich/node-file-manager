@@ -13,11 +13,7 @@ export const Commands = {
     Delete: 'rm',
   },
   Os: {
-    GetEOL: 'os --EOL',
-    GetCpus: 'os --cpus',
-    GetHomeDir: 'os --homedir',
-    GetUsername: 'os --username',
-    GetArchitecture: 'os --architecture',
+    Info: 'os',
   },
   Hash: {
     CalcAndPrint: 'hash',
@@ -26,9 +22,20 @@ export const Commands = {
     Compress: 'compress',
     Decompress: 'decompress',
   },
+  Exit: '.exit',
 };
 
 export const FileType = {
   File: 'file',
   Directory: 'directory',
+};
+
+export const Params = {
+  Os: {
+    EOL: '--EOL',
+    Cpus: '--cpus',
+    HomeDir: '--homedir',
+    Username: '--username',
+    Architecture: '--architecture',
+  },
 };

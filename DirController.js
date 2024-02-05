@@ -1,53 +1,55 @@
 import path from 'path';
 import os from 'os';
-import fs from 'fs/promises';
-import { Commands, FileType } from './constants.js';
-import { parser } from './Parser.js';
+import fsp from 'fs/promises';
+import { FileType } from './constants.js';
 import { sortDirItems } from './utils.js';
+import { BaseController } from './BaseController.js';
+import { messenger } from './Messenger.js';
 
-class DirController {
+class DirController extends BaseController {
   limitPath = os.homedir();
 
-  async goUpper() {
-    try {
-      const currentPath = process.cwd();
+  async goUpper(params) {
+    this._checkParamsQty(params, 0);
 
-      if (currentPath === this.limitPath) {
-        return;
-      }
+    const currentPath = process.cwd();
 
-      const targetPath = path.resolve(currentPath, '..');
-      process.chdir(targetPath);
-    } catch (error) {
-      console.log(error.message);
+    if (currentPath === this.limitPath) {
+      return;
     }
+
+    const targetPath = path.resolve(currentPath, '..');
+    process.chdir(targetPath);
   }
 
-  async goTo(input) {
-    try {
-      const targetPath = path.resolve(parser.extractUserInput(input, Commands.Dir.GoTo));
+  async goTo(params) {
+    this._checkParamsQty(params, 1);
 
-      process.chdir(targetPath);
-    } catch (error) {
-      console.log(error.message);
-    }
+    const [dirPath] = params;
+    const targetPath = path.resolve(dirPath);
+
+    await this._isDir(targetPath);
+
+    process.chdir(targetPath);
   }
 
-  async printItems() {
-    try {
-      const dirItems = (await fs.readdir(process.cwd(), { withFileTypes: true }))
-        .map((data) => {
-          const item = { Name: data.name };
-          item.Type = data.isFile() ? FileType.File : FileType.Directory;
-          return item;
-        })
-        .sort(sortDirItems);
+  async printItems(params) {
+    this._checkParamsQty(params, 0);
 
-      console.table(dirItems);
+    const dirItems = (await fsp.readdir(process.cwd(), { withFileTypes: true }))
+      .map((data) => {
+        const item = { Name: data.name };
+        item.Type = data.isFile() ? FileType.File : FileType.Directory;
+        return item;
+      })
+      .sort(sortDirItems);
 
-    } catch (error) {
-      console.log(error.message);
-    }
+    messenger.printSuccess('List of all files and folders in current directory: ');
+    messenger.printSuccess('- list contains files and folder names (for files - with extension) (Name column)');
+    messenger.printSuccess('- folders and files are sorted in alphabetical order ascending, but list of folders goes first');
+    messenger.printSuccess('- Type of directory content should be marked explicitly (Type column)');
+
+    console.table(dirItems);
   }
 }
 export const dirController = new DirController();

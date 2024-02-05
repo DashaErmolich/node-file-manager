@@ -1,54 +1,35 @@
-import path from 'path';
 import fs from 'fs';
-import stream, { pipeline } from 'stream';
-import { Commands } from './constants.js';
-import { parser } from './Parser.js';
-import { splitWords } from './utils.js';
 import zlib from 'zlib';
+import { BaseController } from './BaseController.js';
+import { messenger } from './Messenger.js';
 
-class ZlibController {
-  async brotliCompressFile(input) {
-    try {
-      let [sourcePath, destinationPath] = splitWords(
-        parser.extractUserInput(input, Commands.Zlib.Compress)
-      );
-      sourcePath = path.resolve(sourcePath);
-      destinationPath = path.resolve(destinationPath, `${path.basename(sourcePath)}.br`);
+class ZlibController extends BaseController {
+  BROTLI_EXT = '.br';
 
-      const readStream = fs.createReadStream(sourcePath, { encoding: 'utf-8' });
-      const writeStream = fs.createWriteStream(destinationPath);
+  async brotliCompressFile(params) {
+    const { sourceFilePath, targetFilePath } = await this._getFilesPaths(params);
 
-      const brotliCompress = zlib.createBrotliCompress();
+    const readStream = fs.createReadStream(sourceFilePath, { encoding: 'utf-8' });
+    const writeStream = fs.createWriteStream(`${targetFilePath}${this.BROTLI_EXT}`);
 
-      readStream.pipe(brotliCompress).pipe(writeStream);
-    } catch (error) {
-      console.log(error.message);
-    }
+    const brotliCompress = zlib.createBrotliCompress();
+
+    readStream.pipe(brotliCompress).pipe(writeStream);
+    messenger.printSuccess(`File was successfully compressed using Brotli algorithm`);
+    messenger.printSuccess(`File path: ${targetFilePath}`);
   }
 
-  async brotliDecompressFile(input) {
-    try {
-      let [sourcePath, destinationPath] = splitWords(
-        parser.extractUserInput(input, Commands.Zlib.Decompress)
-      );
-      sourcePath = path.resolve(sourcePath);
-      const filename = path.basename(sourcePath).split('.');
-      filename.pop();
-      const newFilename = filename.join('.');
-      destinationPath = path.resolve(
-        destinationPath,
-        newFilename,
-      );
+  async brotliDecompressFile(params) {
+    const { sourceFilePath, targetFilePath } = await this._getFilesPaths(params);
 
-      const readStream = fs.createReadStream(sourcePath);
-      const writeStream = fs.createWriteStream(destinationPath);
+    const readStream = fs.createReadStream(sourceFilePath);
+    const writeStream = fs.createWriteStream(targetFilePath.split(this.BROTLI_EXT).join(''));
 
-      const brotliDecompress = zlib.createBrotliDecompress();
+    const brotliDecompress = zlib.createBrotliDecompress();
 
-      readStream.pipe(brotliDecompress).pipe(writeStream);
-    } catch (error) {
-      console.log(error.message);
-    }
+    readStream.pipe(brotliDecompress).pipe(writeStream);
+    messenger.printSuccess(`File was successfully decompressed using Brotli algorithm`);
+    messenger.printSuccess(`File path: ${targetFilePath}`);
   }
 }
 export const zlibController = new ZlibController();

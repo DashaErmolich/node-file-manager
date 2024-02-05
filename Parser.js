@@ -11,11 +11,11 @@ class Parser {
   }
 
   parseInput(input) {
-    //console.log(1111, input.split(''));
+    return input.split(' ');
   }
 
   extractUserInput(input, command) {
-    return input.slice(command.length + 1)
+    return input.slice(command.length + 1);
   }
 }
 

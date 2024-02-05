@@ -1,58 +1,53 @@
-import path from 'path';
-import fs from 'fs';
-import fsp from 'fs/promises';
-import { Commands } from './constants.js';
-import { parser } from './Parser.js';
-import { splitWords } from './utils.js';
+import { Params } from './constants.js';
 import os from 'os';
+import { BaseController } from './BaseController.js';
+import { messenger } from './Messenger.js';
 
-class OsController {
-  getEOL() {
-    try {
-      console.log(JSON.stringify(os.EOL));
-    } catch (error) {
-      console.log(error.message);
-    }
+class OsController extends BaseController {
+  paramsManager = {
+    [Params.Os.EOL]: this.printEOL,
+    [Params.Os.Cpus]: this.printCpus,
+    [Params.Os.HomeDir]: this.printHomeDir,
+    [Params.Os.Username]: this.printSystemUsername,
+    [Params.Os.Architecture]: this.printArch,
+  };
+
+  async printInfo(params) {
+    this._checkParamsQty(params, 1);
+
+    await this.paramsManager[params]();
   }
 
-  async getCpus() {
-    try {
-      const cpus = os.cpus();
-
-      const info = cpus.map((item) => ({
-        'Model': item.model,
-        'Clock Rate, GHz': item.speed / 1000, // MHz -> GHz
-      }));
-
-      console.log(`Overall amount: ${os.availableParallelism()}`);
-      console.table(info);
-    } catch (error) {
-      console.log(error.message);
-    }
+  async printEOL() {
+    messenger.printSuccess(`Default system End-Of-Line: ${JSON.stringify(os.EOL)}`);
   }
 
-  printHomeDir() {
-    try {
-      console.log(os.homedir());
-    } catch (error) {
-      console.log(error.message);
-    }
+  async printCpus() {
+    const cpus = os.cpus();
+
+    const info = cpus.map((item) => ({
+      Model: item.model,
+      'Clock Rate, GHz': item.speed / 1000, // MHz -> GHz
+    }));
+
+    messenger.printSuccess(`Overall amount of CPUS: ${os.availableParallelism()}`);
+    messenger.printSuccess('Model and clock rate (in GHz) for each of them: ');
+    console.table(info);
   }
 
-  printSystemUsername() {
-    try {
-      console.log(os.userInfo().username);
-    } catch (error) {
-      console.log(error.message);
-    }
+  async printHomeDir() {
+    messenger.printSuccess(`System home directory: ${os.homedir()}`);
   }
 
-  printArch() {
-    try {
-      console.log(os.arch());
-    } catch (error) {
-      console.log(error.message);
-    }
+  async printSystemUsername() {
+    messenger.printSuccess(`System username: ${os.userInfo().username}`);
+  }
+
+  async printArch() {
+    messenger.printSuccess(
+      `CPU architecture for which Node.js binary has compiled: ${process.arch}`
+    );
   }
 }
+
 export const osController = new OsController();
