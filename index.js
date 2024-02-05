@@ -3,6 +3,8 @@ import { stdin as input, stdout as output } from 'process';
 import { parser } from './Parser.js';
 import { messenger } from './Messenger.js';
 import { commandController } from './CommandController.js';
+import os from 'os';
+import { ValidationError } from './ValidationError.js';
 
 export const rl = readline.createInterface({ input, output});
 
@@ -23,7 +25,11 @@ async function start() {
     try {
       await commandController.executeCommand();
     } catch (error) {
-      messenger.printError(error.message)
+      if (error instanceof ValidationError) {
+        messenger.printError(error.message);
+      } else {
+        messenger.printError(`Operation failed: ${os.EOL}` + error.message)
+      }
     }
 
     messenger.printCurrentDir();
@@ -34,4 +40,4 @@ async function start() {
   });
 }
 
-start();
+await start();

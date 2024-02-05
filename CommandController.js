@@ -50,10 +50,12 @@ class CommandController {
   }
 
   async executeCommand() {
-    if (!(this.#command in this)) {
-      throw new ValidationError(`Incorrect command: ${this.#command}`);
+    if (this.#command) {
+      if (!(this.#command in this)) {
+        throw new ValidationError(`Incorrect command: ${this.#command}`);
+      }
+      await this[this.#command](this.#params);
     }
-    await this[this.#command](this.#params);
   }
 }
 

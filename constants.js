@@ -39,3 +39,8 @@ export const Params = {
     Architecture: '--architecture',
   },
 };
+
+export const ConsoleColors = {
+  Cyan: '\x1b[36m%s\x1b[0m',
+  Yellow: '\x1b[33m%s\x1b[0m',
+}
